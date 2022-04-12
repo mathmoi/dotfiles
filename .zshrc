@@ -9,14 +9,13 @@ if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
   source /usr/share/zsh/manjaro-zsh-prompt
 fi
 
-# Use vim as the default editor
-export VISUAL=vim
+# Use nvim as the default editor
+export VISUAL=nvim
 export EDITOR="$VISUAL"
 
 # Creating alias
 alias ll='ls --all --color=auto -l --human-readable'
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/.git --work-tree=$HOME'
-
 
 # Disable ZSH autocorect
 unsetopt correct

@@ -32,7 +32,7 @@ from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
 mod = "mod4"
-terminal = guess_terminal()
+terminal = 'alacritty'
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -73,28 +73,32 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     #Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-    Key([mod], "r", lazy.spawn("rofi -show run"), desc="Spawn a command using a prompt widget"),
+    Key([mod], "r", lazy.spawn("rofi -show drun -show-icons"), desc="Spawn a command using a prompt widget"),
     Key([mod], 'f', lazy.window.toggle_floating(), desc="Toggle floating"),
 ]
 
-groups = [Group(i) for i in "123456789"]
+groups = [Group("HOME", layout='columns'),
+          Group("WWW", layout='columns'),
+          Group("DEV1", layout='columns'),
+          Group("DEV2", layout='columns'),
+          Group("CFG", layout='columns')]
 
-for i in groups:
+for i, g in enumerate(groups):
     keys.extend(
         [
             # mod1 + letter of group = switch to group
             Key(
                 [mod],
-                i.name,
-                lazy.group[i.name].toscreen(),
-                desc="Switch to group {}".format(i.name),
+                str(i + 1),
+                lazy.group[g.name].toscreen(),
+                desc="Switch to group {}".format(g.name),
             ),
             # mod1 + shift + letter of group = switch to & move focused window to group
             Key(
                 [mod, "shift"],
-                i.name,
-                lazy.window.togroup(i.name, switch_group=True),
-                desc="Switch to & move focused window to group {}".format(i.name),
+                str(i + 1),
+                lazy.window.togroup(g.name, switch_group=True),
+                desc="Switch to & move focused window to group {}".format(g.name),
             ),
             # Or, use below if you prefer not to switch to that group.
             # # mod1 + shift + letter of group = move focused window to group
@@ -110,7 +114,7 @@ layouts = [
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
-    # layout.MonadTall(),
+    layout.MonadTall(),
     # layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile(),
@@ -128,10 +132,21 @@ extension_defaults = widget_defaults.copy()
 
 screens = [
     Screen(
-        bottom=bar.Bar(
+        top=bar.Bar(
             [
-                widget.CurrentLayout(),
-                widget.GroupBox(),
+                widget.CurrentLayout(
+                    background="#3333ff",
+                    fontsize=14,
+                    font="Azeret Mono SemiBold"),
+                widget.TextBox(
+                    text="🭬",
+                    background="#2d46ff",
+                    fontsize=36,
+                    font="Azeret Mono SemiBold"),
+                widget.GroupBox(
+                    fontsize=14,
+                    font="Azeret Mono SemiBold"
+                ),
                 widget.Prompt(),
                 widget.WindowName(),
                 widget.Chord(
@@ -147,6 +162,7 @@ screens = [
                 widget.QuickExit(),
             ],
             36,
+            margin=[10, 10, 0, 10]
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),

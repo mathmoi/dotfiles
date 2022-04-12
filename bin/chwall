@@ -1,0 +1,1 @@
+DISPLAY=:0 feh --randomize --bg-fill /mnt/Donnes/Wallpapers/*

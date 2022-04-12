@@ -24,3 +24,5 @@ filetype plugin indent on    " required
 
 nnoremap <C-e> :NERDTreeToggle<CR>
 let g:NERDTreeNodeDelimiter = "\u00a0"
+
+syntax on
