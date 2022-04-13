@@ -104,13 +104,25 @@ for i, g in enumerate(groups):
         ]
     )
 
+dark_background = "#262626"
+light_foreground = "#dab997"
+white = "#ffffff"
+black = "#000000"
+red = "#d75f5f"
+blue = "#82adad"
+yellow = "#ffaf00"
+orange = "#ff8700"
+purple = "#d485ad"
+brown = "#d65d0e"
+green = "#afaf00"
+
 layouts = [
     layout.Columns(
         border_focus_stack=["#d75f5f", "#8f3d3d"],
-        border_width=4,
+        border_focus=red,
+        border_width=3,
         margin=margin),
     #layout.Max(),
-    # Try more layouts by unleashing below layouts.
     layout.Stack(
         num_stacks=1,
         margin=margin),
@@ -126,47 +138,59 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="sans",
-    fontsize=12,
-    padding=3,
+    font="Azeret Mono SemiBold",
+    fontsize=18,
+    foreground=black,
+    background=white,
+    padding=10,
 )
 extension_defaults = widget_defaults.copy()
+
+def separator(forward, background, foreground):
+    glyph = u"\uE0B0" if forward else u"\uE0B2"
+    
+    return widget.TextBox(
+            text=glyph,
+            foreground=foreground,
+            background=background,
+            fontsize=36,
+            font="FixedsysExcelsiorIIIb Nerd Font",
+            padding=0) 
 
 screens = [
     Screen(
         top=bar.Bar(
             [
                 widget.CurrentLayout(
-                    background="#3333ff",
-                    fontsize=14,
-                    font="Azeret Mono SemiBold"),
-                widget.TextBox(
-                    text="🭬",
-                    background="#2d46ff",
-                    fontsize=36,
-                    font="Azeret Mono SemiBold"),
+                    foreground=black,
+                    background=red),
+                separator(True, blue, red),
                 widget.GroupBox(
-                    fontsize=14,
-                    font="Azeret Mono SemiBold"
-                ),
-                widget.Prompt(),
-                widget.WindowName(),
-                widget.Chord(
-                    chords_colors={
-                        "launch": ("#ff0000", "#ffffff"),
-                    },
-                    name_transform=lambda name: name.upper(),
-                ),
-                widget.TextBox("default config", name="default"),
-                widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
-                widget.Systray(),
-                widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
-                widget.QuickExit(),
+                    background=blue,
+                    highlight_method="text",
+                    active=white,
+                    inactive=white,
+                    this_current_screen_border=black),
+                separator(True, dark_background, blue), 
+                widget.WindowName(
+                    foreground=light_foreground,
+                    background=dark_background,
+                    borderwidth=0),
+                separator(False, dark_background, green),
+                widget.PulseVolume(
+                    background=green),
+                separator(False, green, purple),
+                widget.Clock(
+                    format="%A %d %B %Y %H:%M:%S",
+                    background=purple),
+                separator(False, purple, brown),
+                widget.QuickExit(
+                    default_text="[X]",
+                    countdown_format="[{}]",
+                    background=brown),
             ],
             36,
             margin=[margin, margin, 0, margin]
-            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
     ),
 ]

@@ -6,3 +6,8 @@ template = "alacritty"
 file = "~/.config/rofi/theme.rasi"
 template = "rofi"
 rewrite = true
+
+[[items]]
+file = "~/.vim/base16theme"
+template = "vim"
+rewrite = true

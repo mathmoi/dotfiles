@@ -1,19 +1,19 @@
 /**
- * Base16 Darcula ROFI Color theme
+ * Base16 Gruvbox dark, pale ROFI Color theme
  *
  * Authors
- *  Scheme: jetbrains
+ *  Scheme: Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
  *  Template: Jordi Pakey-Rodriguez (https://github.com/0xdec), Andrea Scarpino (https://github.com/ilpianista)
  */
 
 * {
-    red:                         rgba ( 78, 173, 229, 100 % );
-    blue:                        rgba ( 152, 118, 170, 100 % );
-    lightfg:                     rgba ( 255, 198, 109, 100 % );
-    lightbg:                     rgba ( 50, 50, 50, 100 % );
-    foreground:                  rgba ( 169, 183, 198, 100 % );
-    background:                  rgba ( 43, 43, 43, 100 % );
-    background-color:            rgba ( 43, 43, 43, 0 % );
+    red:                         rgba ( 215, 95, 95, 100 % );
+    blue:                        rgba ( 131, 173, 173, 100 % );
+    lightfg:                     rgba ( 213, 196, 161, 100 % );
+    lightbg:                     rgba ( 58, 58, 58, 100 % );
+    foreground:                  rgba ( 218, 185, 151, 100 % );
+    background:                  rgba ( 38, 38, 38, 100 % );
+    background-color:            rgba ( 38, 38, 38, 0 % );
     separatorcolor:              @foreground;
     border-color:                @foreground;
     selected-normal-foreground:  @lightbg;
