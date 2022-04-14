@@ -70,7 +70,8 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     #Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-    Key([mod], "r", lazy.spawn("rofi -show drun -show-icons"), desc="Spawn a command using a prompt widget"),
+    Key([mod], "r", lazy.spawn("rofi -show drun -modi drun,drun,ssh,window,calc -show-icons"), desc="Spawn a command using a prompt widget"),
+    Key([mod], "c", lazy.spawn("rofi -show calc -modi calc"), desc="Spawn a command using a prompt widget"),
     Key([mod], 'f', lazy.window.toggle_floating(), desc="Toggle floating"),
 ]
 
