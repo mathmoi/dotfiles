@@ -8,6 +8,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'chriskempson/base16-vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -31,6 +32,8 @@ colorscheme base16-default-dark
 syntax on
 
 set number relativenumber
+
+set mouse=a
 
 :map <Home> ^
 :imap <Home> <Esc>^i
