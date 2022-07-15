@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+# To download and run this scrit : mkdir $HOME/bin; wget https://raw.githubusercontent.com/mathmoi/dotfiles/master/bin/mpos -O $HOME/bin/mpos; chmod +x $HOME/bin/mpos; $HOME/bin/mpos
+
+if [ "$(id -u)" = 0 ]; then
+    echo "##################################################################"
+    echo "This script MUST NOT be run as root user since it makes changes"
+    echo "to the \$HOME directory of the \$USER executing this script."
+    echo "The \$HOME directory of the root user is, of course, '/root'."
+    echo "We don't want to mess around in there. So run this script as a"
+    echo "normal user. You will be asked for a sudo password when necessary."
+    echo "##################################################################"
+    exit 1
+fi
+
+header() {
+    echo
+    echo "##################################################################"
+    echo $1
+    echo "##################################################################"
+}
+
+# Update the systeme
+header "Updating the system"
+sudo pamac upgrade --aur --no-confirm
+
+# install script prerequisite
+header "Installing pre-requisites"
+sudo pamac install git --no-confirm
+
+# install dotfiles
+if [ ! -d "$HOME/.cfg" ]
+then
+    header "Installing dotfiles"
+    CONFIG="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
+    git clone --bare https://github.com/mathmoi/dotfiles.git $HOME/.cfg
+    $CONFIG checkout
+    $CONFIG config --local status.showUntrackedFiles no
+fi
+
+# install packages
+header "Installing packages"
+PACKAGES=$(tr '\n' ' ' < $HOME/.packages)
+sudo pamac install $PACKAGES --no-confirm
+
+# install AUR packages
+PACKAGESAUR=$(tr '\n' ' ' < $HOME/.packages.aur)
+sudo pamac build $PACKAGESAUR --no-confirm
+
