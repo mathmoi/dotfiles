@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# To download and run this scrit : mkdir $HOME/bin; wget https://raw.githubusercontent.com/mathmoi/dotfiles/master/bin/mpos -O $HOME/bin/mpos; chmod +x $HOME/bin/mpos; $HOME/bin/mpos
+# To download and run this scrit : wget https://raw.githubusercontent.com/mathmoi/dotfiles/master/bin/mpos -O $HOME/mpos.tmp; chmod +x $HOME/mpos.tmp; $HOME/mpos.tml; rm $HOME/mpos.tmp
 
 if [ "$(id -u)" = 0 ]; then
     echo "##################################################################"
@@ -32,8 +32,12 @@ sudo pamac install git --no-confirm
 if [ ! -d "$HOME/.cfg" ]
 then
     header "Installing dotfiles"
+
     CONFIG="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
     git clone --bare https://github.com/mathmoi/dotfiles.git $HOME/.cfg
+
+    mkdir -p .config-backup && $CONFIG checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} .config-backup/{}
+
     $CONFIG checkout
     $CONFIG config --local status.showUntrackedFiles no
 fi
