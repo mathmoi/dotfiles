@@ -20,6 +20,10 @@ header() {
     echo "##################################################################"
 }
 
+# Selecting good mirrors
+header "Selecting good mirrors"
+sudo pacman-mirrors --continent
+
 # Update the systeme
 header "Updating the system"
 sudo pamac upgrade --aur --no-confirm
