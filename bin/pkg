@@ -1,0 +1,116 @@
+#!/usr/bin/env python3
+
+import argparse
+import os
+from os.path import expanduser
+
+commands_names = ['update', 'upgrade', 'search', 'install', 'remove', 'autoremove', 'show', 'updatemirrors']
+
+parser = argparse.ArgumentParser(description='Wrapper for pacman and friends')
+parser.add_argument('command', choices=commands_names, help='Command to execute')
+parser.add_argument('packages', nargs='*', help='Names of the packages to handles')
+parser.add_argument('-y', action='store_true', dest='noconfirm', help='Apply changes without asking for confirmation')
+parser.add_argument('--verbose', action='store_true', dest='verbose', help='Display commands before running them')
+parser.add_argument('--dry-run', action='store_true', dest='dry_run', help='Do not really run commands')
+parser.add_argument('--aur', action='store_true', dest='aur', help='Handle packages from the AUR')
+
+
+args = parser.parse_args()
+
+def run_cmd(command):
+    if args.verbose:
+        print(command)
+
+    if not args.dry_run:
+        os.system(command)
+
+def add_package(filename, package):
+    print(f'adding {package} to {filename}')
+    with open(filename, 'r+') as file:
+        for line in file:
+            if line.strip() == package:
+                print('found')
+                break
+        else:
+            print('write')
+            file.write(f'{package}\n')
+
+def remove_package(filename, package):
+    with open(filename, 'r') as file:
+        lines = file.readlines()
+    
+    with open(filename, 'w') as file:
+        for line in lines:
+            if line.strip() != package:
+                file.write(line)
+
+def get_confirm():
+    return "--noconfirm" if args.noconfirm else "--confirm"
+
+def get_packages():
+    return " ".join(args.packages)
+
+if args.aur:
+    match args.command:
+        case 'update':
+            run_cmd('pacman -Sy')
+
+        case 'upgrade':
+            run_cmd(f'yay -Syua {get_confirm()}')
+
+        case 'search':
+            expr = '|'.join([f'({item})' for item in args.packages])
+            run_cmd(f"yay -Ssa '{expr}'")
+
+        case 'install':
+            run_cmd(f'yay -Sa {get_confirm()} {get_packages()}')
+            for package in args.packages:
+                add_package(expanduser('~/.packages.aur'), package)
+
+        case 'remove':
+            run_cmd(f'yay -Rsa {get_confirm()} {get_packages()}')
+            for package in args.packages:
+                remove_package(expanduser('~/.packages.aur'), package)
+
+        case 'autoremove':
+            run_cmd(f'yay -Yca {get_confirm()} -')
+        
+        case 'show':
+            run_cmd(f'yay -Sia {get_packages()}')
+
+        case _:
+            print('Command not implemented yet.')
+
+else:
+    match args.command:
+        case 'updatemirrors':
+            run_cmd('sudo pacman-mirrors --continent')
+
+        case 'update':
+            run_cmd('sudo pacman -Sy')
+
+        case 'upgrade':
+            run_cmd(f'sudo pacman -Su {get_confirm()}')
+
+        case 'search':
+            expr = '|'.join([f'({item})' for item in args.packages])
+            run_cmd(f"pacman -Ss '{expr}'")
+
+        case 'install':
+            run_cmd(f'sudo pacman -S {get_confirm()} {get_packages()}')
+            for package in args.packages:
+                add_package(expanduser('~/.packages'), package)
+
+        case 'remove':
+            run_cmd(f'sudo pacman -Rs {get_confirm()} {get_packages()}')
+            for package in args.packages:
+                remove_package(expanduser('~/.packages'), package)
+
+        case 'autoremove':
+            run_cmd(f'sudo pacman -Qtdq | pacman -Rns {get_confirm()} -')
+        
+        case 'show':
+            run_cmd(f'pacman -Si {get_packages()}')
+
+        case _:
+            print('Command not implemented yet.')

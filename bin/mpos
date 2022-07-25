@@ -40,6 +40,9 @@ then
 
     $CONFIG checkout
     $CONFIG config --local status.showUntrackedFiles no
+
+    chmod +x $HOME/bin/mpos
+    chmod +x $HOME/bin/pkg
 fi
 
 # install packages
