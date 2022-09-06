@@ -1,3 +1,5 @@
 [user]
 	name = Mathieu Pagé
 	email = m@mathieupage.com
+[credential]
+	helper = store
