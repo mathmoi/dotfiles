@@ -9,3 +9,4 @@ vlc
 cmake
 boost
 gnome-screenshot
+gdb
