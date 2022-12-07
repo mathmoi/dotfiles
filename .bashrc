@@ -137,7 +137,7 @@ ex ()
 }
 
 # Customize my PATH
-export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # Use vim as the default editor
 export VISUAL=vim
