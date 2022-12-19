@@ -3,3 +3,5 @@
 	email = m@mathieupage.com
 [credential]
 	helper = store
+[push]
+	autoSetupRemote = true
