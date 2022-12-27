@@ -128,7 +128,7 @@ ex ()
 }
 
 # Customize my PATH
-export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:/home/mathmoi/.local/bin:$PATH"
 
 # Use vim as the default editor
 export VISUAL=nvim
@@ -139,4 +139,19 @@ alias ll='ls --all --color=auto -l --human-readable'
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias vim='nvim'
 
-neofetch
+# Creating the cs command that display a quote in a funny way and using it when 
+# we start the shell.
+cs() {
+   fortune | cowsay -f $(ls /usr/share/cowsay/cows/ | shuf -n1) | lolcat
+}
+
+if [ -x /usr/games/cowsay -a -x /usr/games/fortune ]; then
+   cs
+fi
+
+# Powerline configuration
+export LC_ALL=fr_CA.UTF-8
+powerline-daemon -q
+POWERLINE_BASH_CONTINUATION=1
+POWERLINE_BASH_SELECT=1
+source /home/mathmoi/.local/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh
