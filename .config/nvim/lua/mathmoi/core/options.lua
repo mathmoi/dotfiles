@@ -37,3 +37,5 @@ opt.splitbelow = true
 
 -- Others
 opt.iskeyword:append("-") -- Makes '-' part of words
+
+opt.colorcolumn = "81,91,121"
