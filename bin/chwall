@@ -1,1 +1,4 @@
-DISPLAY=:0 feh --randomize --bg-fill /mnt/Donnes/Wallpapers/*
+#!/bin/bash
+wallpaper_directory=/mnt/Donnes/Wallpapers
+wallpaper=$(ls $wallpaper_directory | sort -R | head -n 1)
+gsettings set org.gnome.desktop.background picture-uri "$wallpaper_directory/$wallpaper"
