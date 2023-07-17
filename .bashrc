@@ -150,8 +150,12 @@ if [ -x /usr/games/cowsay -a -x /usr/games/fortune ]; then
 fi
 
 # Powerline configuration
-export LC_ALL=fr_CA.UTF-8
-powerline-daemon -q
-POWERLINE_BASH_CONTINUATION=1
-POWERLINE_BASH_SELECT=1
-source /home/mathmoi/.local/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh
+#export LC_ALL=fr_CA.UTF-8
+#powerline-daemon -q
+#POWERLINE_BASH_CONTINUATION=1
+#POWERLINE_BASH_SELECT=1
+#source /home/mathmoi/.local/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh
+
+if [ -f /usr/share/powerline/bindings/bash/powerline.sh ]; then
+   source /usr/share/powerline/bindings/bash/powerline.sh
+fi
