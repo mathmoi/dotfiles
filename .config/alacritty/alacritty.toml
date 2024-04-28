@@ -1,0 +1,45 @@
+[shell]
+program = "/usr/bin/tmux"
+args = ['new-session', '-A', '-s', 'm']
+
+[window]
+dimensions = { columns = 120, lines = 50 }
+padding = { x = 5, y = 5 }
+dynamic_padding = true
+
+[scrolling]
+history = 10000
+
+[font]
+normal      = { family = "CaskaydiaCove Nerd Font", style = "SemiBold" }
+bold        = { family = "CaskaydiaCove Nerd Font", style = "Bold" }
+italic      = { family = "CaskaydiaCove Nerd Font", style = "SemiBold Italic" }
+bold_italic = { family = "CaskaydiaCove Nerd Font", style = "Bold Italic" }
+size = 13
+
+# Palenight theme copied from https://github.com/alacritty/alacritty-theme/blob/master/themes/palenight.toml 
+[colors.primary]
+background = '#292d3e'
+foreground = '#d0d0d0'
+
+# Normal colors
+[colors.normal]
+black   = '#292d3e'
+red     = '#f07178'
+green   = '#c3e88d'
+yellow  = '#ffcb6b'
+blue    = '#82aaff'
+magenta = '#c792ea'
+cyan    = '#89ddff'
+white   = '#d0d0d0'
+
+# Bright colors
+[colors.bright]
+black   = '#434758'
+red     = '#ff8b92'
+green   = '#ddffa7'
+yellow  = '#ffe585'
+blue    = '#9cc4ff'
+magenta = '#e1acff'
+cyan    = '#a3f7ff'
+white   = '#ffffff'
